@@ -47,19 +47,19 @@ class Human_player: public Player
 
 			while (true)
 			{
-			
-			std::cout << "\n" << name << ", select rock [ r ], paper [ p ] or scissor [ s ]" << std::endl;
-			std::cin >> c;
-			
-			
-			if (c != 'p' && c!= 'r' && c!= 's' )
-			
-			std::cout << "Invalid input." << std::endl;
-			
-			else
-			
-			break;
-			
+
+				std::cout << "\n" << name << ", select rock [ r ], paper [ p ] or scissor [ s ]" << std::endl;
+				std::cin >> c;
+
+
+				if (c != 'p' && c!= 'r' && c!= 's' )
+
+					std::cout << "Invalid input." << std::endl;
+
+				else
+
+					break;
+
 			}
 
 			switch (c)
@@ -146,7 +146,7 @@ class Comp: public Player
 
 		}
 
-	        std::string get_name() override 
+		std::string get_name() override 
 		{ 
 
 			return name; 
