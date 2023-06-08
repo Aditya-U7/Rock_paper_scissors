@@ -204,7 +204,13 @@ void check_for_rps(Player* one, Player* two)
 	short one_rps = one -> get_selected_rps(); 
 	short two_rps = two -> get_selected_rps();
 
-	if ((one_rps == 0 && two_rps == 2) || (one_rps == 1 && two_rps == 0) || (one_rps == 2 && two_rps == 1))
+	if (one_rps == two_rps)
+	{
+
+		std::cout << "Equal match; a tie." << std::endl;
+	}
+
+	else if ((one_rps == 0 && two_rps == 2) || (one_rps == 1 && two_rps == 0) || (one_rps == 2 && two_rps == 1))
 	{
 
 		one -> incr_points(); 
@@ -212,7 +218,7 @@ void check_for_rps(Player* one, Player* two)
 
 	}
 
-	else if ((one_rps == 0 && two_rps == 1) || (one_rps == 2 && two_rps == 0) || (one_rps == 1 && two_rps == 2))
+	else 
 	{
 
 		two -> incr_points();   
@@ -220,12 +226,6 @@ void check_for_rps(Player* one, Player* two)
 
 	}
 
-	else
-	{
-
-		std::cout << "Equal match; a tie." << std::endl; 
-
-	}
 }
 
 bool winner_found(Player* one, Player* two)
