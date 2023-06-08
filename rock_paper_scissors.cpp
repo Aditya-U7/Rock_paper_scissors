@@ -240,19 +240,14 @@ bool winner_found(Player* one, Player* two)
 	std::string player_name;
 
 	if (op == 3)
-	{
+	
+                player_name = one -> get_name();
 
-		player_name = one -> get_name();
+        else
+	
+	        player_name = two -> get_name();
 
-	}
-
-	else if (tp == 3)
-	{
-
-		player_name = two -> get_name();
-
-	}
-
+	
 	std::cout <<"\n\n" << player_name << " has won." << std::endl; 
 
 	return true;
