@@ -1,14 +1,14 @@
 /* Author: Aditya Upadhye 
 
-This is an implementation of Rock, Paper, Scissors game using an abstract class. 
+   This is an implementation of Rock, Paper, Scissors game using an abstract class. 
 
-Abstract class provides the interface, and derived classes provide the implementation and data.
+   Abstract class provides the interface, and derived classes provide the implementation and data.
 
-Other language features that have been used are enum class, static_cast and srand() function.
+   Other language features that have been used are enum class, static_cast and srand() function.
 
-Two global friend functions have been used to aid the program.
+   Two global friend functions have been used to aid the program.
 
-*/
+ */
 
 
 #include <iostream>
@@ -24,10 +24,10 @@ class Player
 		virtual void select_rps() = 0;
 		virtual void set_name() = 0;
 		virtual short get_selected_rps() = 0;
-		virtual ~Player(){};
 		virtual std::string get_name() = 0;
 		virtual void incr_points() = 0;
 		virtual short get_points() = 0;
+		virtual ~Player(){};
 
 };
 
@@ -48,7 +48,7 @@ class Human_player: public Player
 			while (true)
 			{
 
-				std::cout << "\n" << name << ", select rock [ r ], paper [ p ] or scissor [ s ]" << std::endl;
+				std::cout << "\n" << name << ", select rock [ r ], paper [ p ] or scissors [ s ]" << std::endl;
 				std::cin >> c;
 
 
@@ -75,8 +75,9 @@ class Human_player: public Player
 
 				case ('s'):
 					usr_selected_obj = Rps::scissors;
-					
-                        }
+
+
+			}
 		}
 
 
@@ -88,15 +89,22 @@ class Human_player: public Player
 
 		}
 
+		short get_selected_rps() override
+		{
+
+			return (static_cast<short>(usr_selected_obj));   
+
+		}
+
 		std::string get_name() override
 		{
 			return name;
 		}
 
-		short get_selected_rps() override
+		void incr_points() override
 		{
 
-			return (static_cast<short>(usr_selected_obj));   
+			points += 1;
 
 		}
 
@@ -107,12 +115,6 @@ class Human_player: public Player
 
 		}
 
-		void incr_points() override
-		{
-
-			points += 1;
-
-		}
 
 	private:
 
@@ -138,20 +140,6 @@ class Comp: public Player
 		friend void check_for_rps(Player*, Player*);
 		friend bool winner_found(Player*, Player*);
 
-		void set_name() override
-		{
-
-			std::cout << "\nComputer name set to " << name << std::endl; 
-
-		}
-
-		std::string get_name() override 
-		{ 
-
-			return name; 
-
-		}
-
 		void select_rps() override
 		{
 
@@ -161,10 +149,24 @@ class Comp: public Player
 
 		}
 
+		void set_name() override
+		{
+
+			std::cout << "\nComputer name set to " << name << std::endl; 
+
+		}
+
 		short get_selected_rps() override
 		{
 
 			return cmp_selected_obj;
+
+		}
+
+		std::string get_name() override 
+		{ 
+
+			return name; 
 
 		}
 
@@ -209,7 +211,7 @@ void check_for_rps(Player* one, Player* two)
 		std::cout << "Equal match; a tie." << std::endl;
 	}
 
-	else if ((one_rps == 0 && two_rps == 2) || (one_rps == 1 && two_rps == 0) || (one_rps == 2 && two_rps == 1))
+	else if ((one_rps == 0 && two_rps == 2) || (one_rps == 1 && two_rps == 0) || (one_rps == 2 && two_rps == 1))  // Rock = 0, Paper = 1 and Scissors = 2.
 	{
 
 		one -> incr_points(); 
@@ -239,14 +241,14 @@ bool winner_found(Player* one, Player* two)
 	std::string player_name;
 
 	if (op == 3)
-	
-                player_name = one -> get_name();
 
-        else
-	
-	        player_name = two -> get_name();
+		player_name = one -> get_name();
 
-	
+	else
+
+		player_name = two -> get_name();
+
+
 	std::cout <<"\n\n" << player_name << " has won." << std::endl; 
 
 	return true;
