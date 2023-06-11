@@ -1,6 +1,6 @@
 /* Author: Aditya Upadhye 
 
-This is an implementation of Rock, Paper, Scissor game using an abstract class. 
+This is an implementation of Rock, Paper, Scissors game using an abstract class. 
 
 Abstract class provides the interface, and derived classes provide the implementation and data.
 
