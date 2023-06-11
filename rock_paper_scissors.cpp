@@ -75,9 +75,8 @@ class Human_player: public Player
 
 				case ('s'):
 					usr_selected_obj = Rps::scissors;
-					break;
-
-			}
+					
+                        }
 		}
 
 
