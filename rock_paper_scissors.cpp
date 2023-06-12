@@ -4,7 +4,7 @@
 
    Abstract class provides the interface, and derived classes provide the implementation and data.
 
-   Other language features that have been used are enum class, static_cast and srand() function.
+   Other language features that have been used are enum class, static_cast, unique_ptr and srand() function.
 
    Two global friend functions have been used to aid the program.
 
@@ -15,6 +15,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <memory>
 
 class Player
 {
@@ -23,10 +24,10 @@ class Player
 
 		virtual void select_rps() = 0;
 		virtual void set_name() = 0;
-		virtual short get_selected_rps() = 0;
-		virtual std::string get_name() = 0;
+		virtual short get_selected_rps() const = 0;
+		virtual std::string get_name() const = 0;
 		virtual void incr_points() = 0;
-		virtual short get_points() = 0;
+		virtual short get_points() const = 0;
 		virtual ~Player(){};
 
 };
@@ -38,10 +39,10 @@ class Human_player: public Player
 
 	public:
 
-		friend void check_for_rps(Player*, Player*);
-		friend bool winner_found(Player*, Player*);
+		friend void check_for_rps(const std::unique_ptr<Player>&, const std::unique_ptr<Player>&);
+		friend bool winner_found(const std::unique_ptr<Player>&, const std::unique_ptr<Player>&);
 
-
+                   
 		void select_rps() override
 		{
 
@@ -89,14 +90,14 @@ class Human_player: public Player
 
 		}
 
-		short get_selected_rps() override
+		short get_selected_rps() const override
 		{
 
 			return (static_cast<short>(usr_selected_obj));   
 
 		}
 
-		std::string get_name() override
+		std::string get_name() const override
 		{
 			return name;
 		}
@@ -108,7 +109,7 @@ class Human_player: public Player
 
 		}
 
-		short get_points() override
+		short get_points() const override
 		{
 
 			return points;
@@ -137,9 +138,9 @@ class Comp: public Player
 
 	public:
 
-		friend void check_for_rps(Player*, Player*);
-		friend bool winner_found(Player*, Player*);
-
+		friend void check_for_rps(const std::unique_ptr<Player>&, const std::unique_ptr<Player>&);
+		friend bool winner_found(const std::unique_ptr<Player>&, const std::unique_ptr<Player>&);
+                
 		void select_rps() override
 		{
 
@@ -156,14 +157,14 @@ class Comp: public Player
 
 		}
 
-		short get_selected_rps() override
+		short get_selected_rps() const override
 		{
 
 			return cmp_selected_obj;
 
 		}
 
-		std::string get_name() override 
+		std::string get_name() const override 
 		{ 
 
 			return name; 
@@ -177,7 +178,7 @@ class Comp: public Player
 
 		}
 
-		short get_points() override
+		short get_points() const override
 		{
 
 			return points;
@@ -199,7 +200,7 @@ class Comp: public Player
 
 ///////////////////////////////////////////////////////////////////////// 
 
-void check_for_rps(Player* one, Player* two)
+void check_for_rps(const std::unique_ptr<Player>& one, const std::unique_ptr<Player>& two)
 {
 
 	short one_rps = one -> get_selected_rps(); 
@@ -229,7 +230,7 @@ void check_for_rps(Player* one, Player* two)
 
 }
 
-bool winner_found(Player* one, Player* two)
+bool winner_found(const std::unique_ptr<Player>& one, const std::unique_ptr<Player>& two)
 {
 
 	short op = one -> get_points();
@@ -264,10 +265,10 @@ int main()
 
 	std::cout << "ROCK, PAPER AND SCISSORS: BEST OF THREE\n\n";
 
-	Player* hp {new Human_player()};
+	std::unique_ptr<Player> hp {new Human_player()};
 	hp -> set_name();
 
-	Player* cp {new Comp()};
+	std::unique_ptr<Player> cp {new Comp()};
 	cp -> set_name();
 
 	while (true)
